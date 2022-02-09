@@ -38,7 +38,6 @@ class DieTest(unittest.TestCase):
         self.assertEqual(die1 - 2, roll1 - 2)
         self.assertEqual(2 - die2, 2 - roll2)
 
-
 class FileParserTest(unittest.TestCase):
     def test_file_content_cant_be_empty(self):
         with self.assertRaises(AttributeError):
@@ -152,32 +151,38 @@ class OutputFormatterTest(unittest.TestCase):
 
 class DiceRollerTest(unittest.TestCase):
     def test_roll(self):
-        ob1 = ParsedChunk(2, 10, 0)
+        
+        ob1 = ParsedChunk(2, 10, 0) # 2d10
         ob1.operation = "+"
 
-        ob2 = ParsedChunk(0, 0, 10)
+        ob2 = ParsedChunk(0, 0, 10) # 10
         ob2.operation = '-'
 
-        ob3 = ParsedChunk(1, 4, 0)
+        ob3 = ParsedChunk(1, 4, 0) # 1d4
 
         parsed_file = [[ob1, ob2, ob3]]
         input_object = parsed_file
         roller = DiceRoller(input_object)
         result = roller.roll(parsed_file[0])
 
-        # won't test for values because, as the dice are randoms, they are not deterministic
+        # won't test for roll value because, as the dice are randoms, they are not deterministic
         self.assertIsInstance(result, RollResult)
+        
+        # minimum of 2d10 + 10 - 1d4 = 8
+        self.assertEqual(result.min, 8)
+        # minimum of 2d10 + 10 - 1d4 = 19
+        self.assertEqual(result.max, 19)
         
         
     
     def test_roll_all(self):
-        ob1 = ParsedChunk(2, 10, 0)
+        ob1 = ParsedChunk(2, 10, 0) # 2d10
         ob1.operation = "+"
 
-        ob2 = ParsedChunk(0, 0, 10)
+        ob2 = ParsedChunk(0, 0, 10) # 10
         ob2.operation = '-'
 
-        ob3 = ParsedChunk(1, 4, 0)
+        ob3 = ParsedChunk(1, 4, 0) # 1d4
 
         parsed_line = [ob1, ob2, ob3]
         parsed_file = [parsed_line, parsed_line, parsed_line]
@@ -186,12 +191,14 @@ class DiceRollerTest(unittest.TestCase):
         results = roller.roll_all()
 
         for line in results:
-            # won't test for values because, as the dice are randoms, they are not deterministic
+            # won't test for roll value because, as the dice are randoms, they are not deterministic
             self.assertIsInstance(line, RollResult)
+            # minimum of 2d10 + 10 - 1d4 = 8
+            self.assertEqual(line.min, 8)
+            # minimum of 2d10 + 10 - 1d4 = 19
+            self.assertEqual(line.max, 19)
 
 
 
 if __name__ == '__main__':
     unittest.main()
-
-
