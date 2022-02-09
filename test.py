@@ -156,7 +156,7 @@ class DiceRollerTest(unittest.TestCase):
         ob1.operation = "+"
 
         ob2 = ParsedChunk(0, 0, 10) # 10
-        ob2.operation = '-'
+        ob2.operation = "-"
 
         ob3 = ParsedChunk(1, 4, 0) # 1d4
 
@@ -170,8 +170,8 @@ class DiceRollerTest(unittest.TestCase):
         
         # minimum of 2d10 + 10 - 1d4 = 8
         self.assertEqual(result.min, 8)
-        # minimum of 2d10 + 10 - 1d4 = 19
-        self.assertEqual(result.max, 19)
+        # maximum of 2d10 + 10 - 1d4 = 29
+        self.assertEqual(result.max, 29)
         
         
     
@@ -195,8 +195,8 @@ class DiceRollerTest(unittest.TestCase):
             self.assertIsInstance(line, RollResult)
             # minimum of 2d10 + 10 - 1d4 = 8
             self.assertEqual(line.min, 8)
-            # minimum of 2d10 + 10 - 1d4 = 19
-            self.assertEqual(line.max, 19)
+            # maximum of 2d10 + 10 - 1d4 = 29
+            self.assertEqual(line.max, 29)
 
 
 
